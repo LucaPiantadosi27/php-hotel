@@ -13,7 +13,7 @@ NOTA: deve essere possibile utilizzare entrambi i filtri contemporaneamente (es.
 Se non viene specificato nessun filtro, visualizzare come in precedenza tutti gli hotel. (modificato)  -->
 
 <?php
-
+$vote = $_GET['vote'];
 $parking = $_GET['parking'];
 
 
@@ -60,9 +60,22 @@ $parking = $_GET['parking'];
     ];
 
     if ($parking) {
-        $hotels = filter($hotels, function($hotel) {
+        $hotels = array_filter($hotels, function($hotel) {
             return $hotel['parking'];
         });
+
+    };
+
+    // inserisco il vote filter
+    if (!is_null($vote)) {
+        $hotels = array_filter($hotels, function($hotel) use ($vote) {
+            return $hotel['vote'] >= $vote;
+        });
+    };
+
+    if (!$parking && is_null($vote)) {
+        $hotels = $hotels;    
+
     }
 
 
