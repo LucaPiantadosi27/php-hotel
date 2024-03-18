@@ -59,10 +59,14 @@ $parking = $_GET['parking'];
 
     ];
 
+    if ($parking) {
+        $hotels = filter($hotels, function($hotel) {
+            return $hotel['parking'];
+        });
+    }
+
 
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -76,31 +80,49 @@ $parking = $_GET['parking'];
 </head>
 <body>
 <div class="container">
-        <table class="table bg-primary ">
+    <h1>Hotel Filter</h1>
 
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Parking</th>
-                    <th>Vote</th>
-                    <th>Distance to Center</th>
-                </tr>
-            </thead>
+    <form>
 
-            <tbody>
-                <?php
-                    foreach($hotels as $selHotel) {
-                        echo "<tr>";
-                        foreach($selHotel as $value) {
-                            echo "<td>$value</td>";
-                        }
-                        echo "</tr>";
+        <div class="mb-3">
+            <label for="vote" class="form-label">Numero di stelle richiesto</label>
+            <input type="form-control" name="vote" class="form-control" id="vote">
+        </div>
+
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" name="parking" class="form-check-input" id="parking">
+            <label class="form-check-label" for="parking">Parcheggio in struttura</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Invia</button>
+
+    </form>
+
+    <table class="table bg-primary ">
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Parking</th>
+                <th>Vote</th>
+                <th>Distance to Center</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php
+                foreach($hotels as $selHotel) {
+                    echo "<tr>";
+                    foreach($selHotel as $value) {
+                        echo "<td>$value</td>";
                     }
-                ?>
-            </tbody>
+                    echo "</tr>";
+                }
+            ?>
+        </tbody>
 
-        </table>
+    </table>
     </div>
 
 
